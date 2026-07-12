@@ -235,6 +235,9 @@ def build(vault, out, config):
         html = open(os.path.join(PKG, "viewer", fname), encoding="utf-8").read()
         html = re.sub(r"graph-data\.js(\?v=\d+)?", f"graph-data.js?v={stamp}", html)
         open(os.path.join(out, fname), "w", encoding="utf-8").write(html)
+    vendor_src = os.path.join(PKG, "viewer", "vendor")
+    if os.path.isdir(vendor_src):
+        shutil.copytree(vendor_src, os.path.join(out, "vendor"), dirs_exist_ok=True)
     logo = config.get("logo")
     if logo and os.path.exists(os.path.expanduser(logo)):
         shutil.copy(os.path.expanduser(logo), os.path.join(out, "logo.png"))
